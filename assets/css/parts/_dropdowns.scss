@@ -1,0 +1,58 @@
+.body-part-control-panel {
+  overflow: show; 
+  height: 0px;
+  z-index: 2;
+  position: relative;
+
+  .nk-btn {
+    &.nk-btn-only-icon {
+      padding: 8px;
+      min-width: 33px;
+      text-align: center;
+    }
+
+    > .icon { margin-right: 0;}
+  }
+}
+
+.nk-btn-select {
+  z-index: 2;
+  &-dropdown {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    display: none;
+
+    padding: 10px;
+    background-color: rgba(14, 14, 14, .9);
+
+    z-index: 3;
+
+    border-radius: 16.5px;
+
+    li {
+      padding: 5px;
+      list-style: none;
+      opacity: 0.7;
+
+      transition: opacity 0.2s ease;
+
+      &.selected {
+        color: white;
+        opacity: 1;
+      }
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  &:hover {
+    .nk-btn-select-dropdown {
+      display: block
+    }
+  }
+}

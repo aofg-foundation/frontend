@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Builder from './builder/builder'
-
-
 // Register builder components
 const blocks = ['Markdown','Paragraph','Title','Image', 'ThreeImages']
 blocks.forEach(block => Builder.component(require(`@/components/builder/${block}`)))

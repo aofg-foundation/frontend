@@ -1,9 +1,10 @@
-import { host, restApiRoot, port } from '~/../server/config.json'
+import Vue from 'vue'
+import { host, restApiRoot, port } from '~/../server/config'
 import axios from 'axios'
 
 const http = axios.create({
   // TODO: production checks
-  baseURL: `http://${host}:${port}${restApiRoot}/`
+  baseURL: `http://localhost:${port}${restApiRoot}/`
 })
 
 http.interceptors.response.use(interceptResponse, interceptErorrs)
@@ -40,6 +41,14 @@ http.find = function (endpoint, filter, params) {
 http.findOne = function (endpoint, filter, params) {
   return http.get(endpoint + '/findOne', { params: { ...params, filter } })
 }
+
+const mixin = {
+  beforeCreate () {
+    this.$backend = http
+  }
+}
+
+Vue.mixin(mixin)
 
 export default function backendModule ({ app }, inject) {
   app.$backend = http

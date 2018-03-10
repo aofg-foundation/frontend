@@ -1,22 +1,20 @@
 <template lang="pug">
-  div.b-builder__toolbar
-    draggable(v-model="availableComponents" :options="toolbarDraggableOptions" :clone='clone' @end='onEnd')
-      div.b-builder__toolbar-component(v-for="componentMeta in availableComponents" :key="componentMeta.name")
-        img.b-builder__toolbar-component-cover(:src="componentMeta.image")
-        span.b-builder__toolbar-component-name {{ componentMeta.builderName || componentMeta.name }}
+  div.b-builder__sorting
+    draggable(v-model="pageData" :options="sortingDraggableOptions" :clone='clone' @end='onEnd')
+      div.b-builder__sorting-component(v-for="componentMeta in availableComponents" :key="componentMeta.name")
+        img.b-builder__sorting-component-cover(:src="componentMeta.image")
+        span.b-builder__sorting-component-name {{ componentMeta.builderName || componentMeta.name }}
 </template>
 
 <script>
 export default {
-  name: 'b-toolbar',
+  name: 'b-sorting',
+
+  props: ['pageData'],
 
   data: () => ({
-    toolbarDraggableOptions: {
-      group: {
-        pull: 'clone',
-        put: false,
-        name: 'builder-components'
-      }
+    sortingDraggableOptions: {
+      // draggable: '.b-builder__sorting-component'
     }
   }),
 

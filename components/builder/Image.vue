@@ -6,7 +6,14 @@
         h3.nk-image__title(:class='titleStyles' v-if='heading') {{ heading }}
         p.nk-image__description(:class='descriptionStyles' v-if='description') {{ description }}
     no-ssr
-      lazy-image.nk-image__picture(:source='source' :width='width' :height='height' :crop='true')
+      lazy-image.nk-image__picture(
+        :class='customClasses'
+        :source='source'
+        :width='width'
+        :height='height'
+        :crop='true'
+        @click='onClick'
+      )
 </template>
 
 <script>
@@ -38,6 +45,10 @@ export default {
       type: Number,
       default: 1080
     },
+    fullsize: {
+      type: Boolean,
+      default: true
+    },
     overlay: {
       default: () => [ 'overlay-gradient' ],
       editor: {
@@ -62,6 +73,17 @@ export default {
     }
   },
 
+  methods: {
+    onClick (evt) {
+      if (this.fullsize) {
+        this.$photoswipe.open(0, [{
+          src: this.source,
+          msrc: `${this.source}?width=640&height=480&quality=10`
+        }])
+      }
+    }
+  },
+
   components: {
     LazyImage
   },
@@ -72,6 +94,11 @@ export default {
     },
     wrapperStyles () {
       return {}
+    },
+    customClasses () {
+      return {
+        'preview-img-item': this.fullsize
+      }
     },
     pictureStyles () {
       return {

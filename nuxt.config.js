@@ -4,7 +4,8 @@ module.exports = {
     'request',
     'vue-i18n',
     'vue-markdown',
-    'vue-progressive-image'
+    'vue-progressive-image',
+    'v-viewer'
   ],
 
   plugins: [
@@ -12,7 +13,10 @@ module.exports = {
     { src: '@/plugins/i18n.js', ssr: true },
     // { src: '@/plugins/affix.js', ssr: true },
     { src: '@/plugins/builder.js', ssr: true },
-    { src: '@/plugins/lazyimage.js', ssr: false }
+    { src: '@/plugins/lazyimage.js', ssr: false },
+    { src: '@/plugins/photoswipe', ssr: false },
+    { src: '@/plugins/vueclip', ssr: false },
+    { src: '@/plugins/media-browser', ssr: true }
   ],
 
   router: {
@@ -27,10 +31,9 @@ module.exports = {
     // '@/static/vendor/katex/katex.min.css',
     '@/assets/css/godlike.scss'
   ],
-
-  // modules: [
-  //   '@/modules/customHandler.js'
-  // ],
+  
+  mode: 'spa',
+  
   /*
   ** Headers of the page
   */
@@ -58,6 +61,7 @@ module.exports = {
     */
     extend (config, { isDev, isClient }) {
       if (isDev && isClient) {
+        config.resolve.alias.vue = 'vue/dist/vue.js'
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,

@@ -1,8 +1,10 @@
 <template lang="pug">
-  component(
-    :is='lazyComponentType'
-    v-bind='lazyProps'
-  )
+  span(@click='(evt) => $emit("click", evt)')
+    no-ssr
+      component(
+        :is='lazyComponentType'
+        v-bind='lazyProps'  
+      )
 </template>
 
 <script>
@@ -25,13 +27,17 @@ function imageUrl(path, { quality, width, height, downscale, crop }) {
   crop = crop ? '' : '/fit-in'
   let size = `/${width}x${height}`
 
-  return `${DOMAIN}/unsafe${crop}${size}/filters:quality(${quality})/${path}`
+  return `${path}?width=${width}&height=${height}&quality=${quality}`
 }
 
 export default {
   name: 'b-lazyimage',
   props: {
     source: {
+      type: String,
+      required: true
+    },
+    loading: {
       type: String,
       required: true
     },
@@ -43,17 +49,9 @@ export default {
       type: Number,
       default: 1080
     },
-    heavy: {
-      type: Boolean,
-      default: true
-    },
     background: {
       type: Boolean,
       default: false
-    },
-    crop: {
-      type: Boolean,
-      default: true
     }
   },
 
@@ -61,24 +59,11 @@ export default {
     lazyComponentType () {
       return this.background ? 'progressive-background' : 'progressive-img'
     },
-
+ 
     lazyProps () {
       return {
-        // TODO: thumbor url builder
-        src: imageUrl(this.source, {
-          width: this.width,
-          height: this.height,
-          crop: this.crop,
-          quality: 85,
-          downscale: 1
-        }),
-        placeholder: imageUrl(this.source, { 
-          width: this.width,
-          height: this.height,
-          crop: this.crop,
-          quality: 10,
-          downscale: 10
-        }),
+        src: this.source,
+        placeholder: this.loading,
         'aspect-ratio': this.height / this.width
       }
     }

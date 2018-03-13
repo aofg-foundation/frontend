@@ -2,7 +2,7 @@ import Vue from 'vue'
 import { host, restApiRoot, port } from '~/../server/config'
 import axios from 'axios'
 
-const http = axios.create({
+export const http = axios.create({
   // TODO: production checks
   baseURL: `http://localhost:${port}${restApiRoot}/`
 })
@@ -26,12 +26,12 @@ function interceptErorrs (err) {
 }
 
 http.removeToken = function () {
-  delete this.http.defaults.headers.common.Authorization
+  delete http.defaults.headers.common.Authorization
 }
 
 http.setToken = function (token) {
   // ? Should be a Bearer?
-  this.http.defaults.headers.common.Authorization = token
+  http.defaults.headers.common.Authorization = token
 }
 
 http.find = function (endpoint, filter, params) {
@@ -40,6 +40,38 @@ http.find = function (endpoint, filter, params) {
 
 http.findOne = function (endpoint, filter, params) {
   return http.get(endpoint + '/findOne', { params: { ...params, filter } })
+}
+
+http.signup = function (payload, signature) {
+  return http
+    .post('endpoint/signup', {
+      payload,
+      signature
+    })
+    .then(data => data.response)
+}
+
+http.nonce = function (payload) {
+  return http
+    .post('endpoint/nonce', {
+      payload
+    })
+    .then(data => data.response)
+}
+
+http.login = function (payload, signature) {
+  return http
+    .post('endpoint/login', {
+      payload,
+      signature
+    })
+    .then(data => data.response)
+}
+
+http.me = function () {
+  return http
+    .get('endpoint/me')
+    .then(data => data.response)
 }
 
 const mixin = {

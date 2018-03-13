@@ -1,5 +1,5 @@
 <template lang="pug">
-  span(@click='(evt) => $emit("click", evt)')
+  div(@click='(evt) => $emit("click", evt)')
     no-ssr
       component(
         :is='lazyComponentType'

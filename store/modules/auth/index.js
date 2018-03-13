@@ -5,9 +5,19 @@ export default {
   namespaced: true,
   
   state: () => ({
-    access_token: null,
+    accessToken: null,
+    expireAt: null,
     account: null
   }),
+
+  getters: {
+    fresh (state) {
+      return state.expireAt && new Date().getTime() < state.expireAt
+    },
+    ready (state) {
+      return state.account && state.accessToken && state.expireAt && new Date().getTime() < state.expireAt
+    }
+  },
 
   actions,
   mutations

@@ -9,6 +9,7 @@ module.exports = {
   ],
 
   plugins: [
+    { src: '@/plugins/elements.js', ssr: true },
     { src: '@/plugins/backend.js', ssr: true },
     { src: '@/plugins/i18n.js', ssr: true },
     // { src: '@/plugins/affix.js', ssr: true },
@@ -16,7 +17,10 @@ module.exports = {
     { src: '@/plugins/lazyimage.js', ssr: false },
     { src: '@/plugins/photoswipe', ssr: false },
     { src: '@/plugins/vueclip', ssr: false },
-    { src: '@/plugins/media-browser', ssr: true }
+    { src: '@/plugins/media-browser', ssr: true },
+    { src: '@/plugins/bem', ssr: true },
+    { src: '@/libs/actions', ssr: true },
+    { src: '@plugins/persistedstate.js', ssr: false }
   ],
 
   router: {

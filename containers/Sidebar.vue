@@ -1,14 +1,21 @@
 <template lang="pug">  
-  nav#nk-side.nk-navbar.nk-navbar-side.nk-navbar-right-side.nk-navbar-lg.nk-navbar-align-center.nk-navbar-overlay-content.open(style='transform: translateX(-100%)')
-    .nk-navbar-bg
+  nav(:class="b()")
+    div(:class="b('bg')")
       lazy-image(
+        :class="b('bg-content')"
         source="http://localhost:3000/api/containers/site/download/ae274652677e247471ee2d39f17a42ce669404edada8473e21880c2b118b1eed.jpg"
         loading="http://localhost:3000/api/containers/site/download/a610a93a8208af7212412bee2d844cc81a86e1aa976bb8e652d1ce7816b9c3a4.jpg"
-        :width="550"
+        :width="350"
         :height="1080"
         :background="true"
       )
-    .nano
+    
+    div(:class="b('content')")
+      img(:class="b('logo')" src='~/assets/images/logo.svg')
+      crypto-auth(:class="b('auth')" v-if='!authenticated')
+      connection(:class="b('connection')" v-else)
+
+    //- .nano
       .nano-content
         .nk-nav-table
           .nk-nav-row
@@ -16,7 +23,7 @@
               img(src='~/assets/images/logo.svg', alt='', width='150')
           //- .nk-nav-row.nk-nav-row-full.nk-nav-row-center(style='padding: 20px')
           div
-            form.nk-sign-form-login.active(action='#')
+            form.nk-sign-form.nk-form.nk-form--black-bg(action='#')
               input.form-control(type='text', placeholder='Username or Email')
               .nk-gap-2
               input.form-control(type='password', placeholder='Password')
@@ -65,13 +72,100 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import LazyImage from '@/components/LazyImage'
 import VideoBackground from '~/components/VideoBackground'
 
+import CryptoAuth from '@/containers/CryptoAuth'
+import Connection from '@/containers/Connection'
+
 export default {
-  name: 'sidebar',
+  name: 'aofg-sidebar',
+  props: {
+    size: {
+      type: String,
+      default: 'md'
+    }
+  },
+  computed: {
+    modificators () {
+      return {
+        size: this.size
+      }
+    },
+    // TODO: mapState
+    authenticated () {
+      return this['auth/ready'] && this['signer/ready']
+    },
+
+    ...mapGetters(['auth/ready', 'signer/ready'])
+  },
   components: {
-    LazyImage
+    LazyImage,
+    CryptoAuth,
+    Connection
   }
 }
 </script>
+
+
+<style lang="scss">
+$aofg-sidebar-z: 1001 !default;
+$aofg-sidebar-bg-z: 0 !default;
+$aofg-sidebar-content-z: 1 !default;
+
+.aofg-sidebar {
+  width: 100%;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+
+  z-index: $aofg-sidebar-z;
+
+  &--size {
+    &-sm { max-width: 210px }
+    &-md { max-width: 350px }
+    &-lg { max-width: 420px }
+  }
+
+  &--side {
+    &-right { right: 0; left: auto }
+    &-left { left: 0; right: auto }
+  }
+
+  &__bg {
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    z-index: $aofg-sidebar-bg-z;
+    background-color: black;
+
+    &-content { opacity: 0.55; }
+  }
+
+  &__content {
+    position: relative;
+    z-index: $aofg-sidebar-content-z;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    height: 100%;
+
+    padding: 50px 20px;
+  }
+
+  &__logo {
+    width: 100%;
+    max-width: 160px;
+
+    margin-bottom: 65px;
+  }
+
+  &__auth {
+    margin-bottom: auto;
+  }
+}
+</style>

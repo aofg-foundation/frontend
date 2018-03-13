@@ -7,6 +7,8 @@
       .nk-page-border-b
       .nk-page-border-l
 
+    overrides
+
     //- slot(name='page-background' v-if='show.background')
       //- video-background(video="https://youtu.be/UkeDo1LhUqQ" placeholder='/images/page-background.jpg')
 
@@ -14,7 +16,7 @@
       top-nav
       main-menu
       
-    sidebar
+    sidebar(:mods='{ side: "right" }')
     
     media-browser(v-if='show.mediaBrowser' @close='onMediaBrowserClose' @select='onMediaBrowserSelect')
     button(@click='openBrowser') Open Media Browser
@@ -29,6 +31,7 @@ import Footer from '@/containers/Footer'
 import Sidebar from '@/containers/Sidebar'
 import TopNav from '@/containers/TopNav'
 import MainMenu from '@/containers/MainMenu'
+import Overrides from '@/containers/Overrides'
 
 export default {
   props: {
@@ -58,7 +61,8 @@ export default {
     'footer-part': Footer,
     Sidebar,
     TopNav,
-    MainMenu
+    MainMenu,
+    Overrides
   },
 
   methods: {
@@ -77,10 +81,9 @@ export default {
 
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Alegreya+SC:500|Roboto+Condensed:300i,400,700&subset=cyrillic');
+@import url('//fonts.googleapis.com/css?family=Alegreya+SC:500|Roboto+Condensed:300i,400,700&subset=cyrillic');
 
 body {
   overflow-y: scroll;
 }
-
 </style>

@@ -50,7 +50,8 @@
     "vue-simple-photoswipe": "^1.0.3",
     "vue-transmit": "^8.1.0",
     "vuedraggable": "^2.16.0",
-    "vuex-class": "^0.3.0"
+    "vuex-class": "^0.3.0",
+    "vuex-persistedstate": "^2.4.2"
   },
   "devDependencies": {
     "@types/node": "^9.4.0",

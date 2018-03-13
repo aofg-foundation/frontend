@@ -17,7 +17,8 @@ module.exports = {
     { src: '@/plugins/lazyimage.js', ssr: false },
     { src: '@/plugins/photoswipe', ssr: false },
     { src: '@/plugins/vueclip', ssr: false },
-    { src: '@/plugins/media-browser', ssr: true }
+    { src: '@/plugins/media-browser', ssr: true },
+    { src: '@/plugins/bem', ssr: true },
   ],
 
   router: {

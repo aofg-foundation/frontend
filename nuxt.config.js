@@ -19,6 +19,8 @@ module.exports = {
     { src: '@/plugins/vueclip', ssr: false },
     { src: '@/plugins/media-browser', ssr: true },
     { src: '@/plugins/bem', ssr: true },
+    { src: '@/libs/actions', ssr: true },
+    { src: '@plugins/persistedstate.js', ssr: false }
   ],
 
   router: {

@@ -9,6 +9,7 @@ module.exports = {
   ],
 
   plugins: [
+    { src: '@/plugins/elements.js', ssr: true },
     { src: '@/plugins/backend.js', ssr: true },
     { src: '@/plugins/i18n.js', ssr: true },
     // { src: '@/plugins/affix.js', ssr: true },
